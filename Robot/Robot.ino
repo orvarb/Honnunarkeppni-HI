@@ -9,21 +9,24 @@ float sLFW;*/
 //----------------
 
 //Skilgreinum motor controler breytur fyrir hjól
-int lfwPWM = 7;
-int lfwplus = 6;
-int lfwminus = 5;
+int lfwPWM = 8;
+int lfwplus = 10;
+int lfwminus = 9;
 //----------------
-int rfwPWM = 4;
-int rfwplus = 3;
-int rfwminus = 2;
+int rfwPWM = 13;
+int rfwplus = 11;
+int rfwminus = 12;
 //----------------
-int lbwPWM = 13;
-int lbwplus = 12;
-int lbwminus = 11;
+int lbwPWM = 2;
+int lbwplus = 3;
+int lbwminus = 4;
 //----------------
-int rbwPWM = 8;
-int rbwplus = 9;
-int rbwminus = 10;
+int rbwPWM = 7;
+int rbwplus = 6;
+int rbwminus = 5;
+
+// Takki sem byrjar loop-una
+int button = 1;
 
 int count;
 
@@ -46,7 +49,8 @@ void setup() {
   pinMode(rbwplus, OUTPUT);   // 9
   pinMode(rbwminus, OUTPUT);  // 10
   pinMode(rbwPWM, OUTPUT);    // 8
-  
+  // Skilgreina pinna fyir takka sem byrjar kóðann
+  pinMode(button, INPUT_PULLUP);
   
   //skilgreinum encoder left front wheel
   /*pinMode(2, INPUT_PULLUP);
@@ -59,14 +63,28 @@ void setup() {
 }*/
 
 void loop() {
-  driveStraight(3000);
-  stopMotors(500);
-  driveLeft(3000);
-  stopMotors(500);
-  driveBackwards(3000);
-  stopMotors(500);
-  driveRight(3000);
-  stopMotors(500);
+
+  if (digitalRead(button) == LOW) {
+    delay(1000);
+    driveStraight(1350);
+    stopMotors(500); 
+    driveRight(3500);
+    stopMotors(500);
+    driveStraight(7700);
+    stopMotors(500); 
+    driveLeft(3100);
+    stopMotors(500);
+    driveStraight(2400);
+    stopMotors(1500);
+    driveStraight(1200);
+    stopMotors(1500);
+    driveLeft(900);
+    stopMotors(1500);
+    adjust(100);
+    stopMotors(500);
+    GUN(10000);
+    stopMotors(500);
+  }
   
   /*if(pulsesLFW>100){
    detachInterrupt(digitalPinToInterrupt(encoderLFW));
@@ -78,64 +96,64 @@ void loop() {
 void driveStraight(int seconds) { 
   digitalWrite(lfwplus, HIGH);  // 6
   digitalWrite(lfwminus, LOW);  // 5
-  analogWrite(lfwPWM, 150);   // 7
+  analogWrite(lfwPWM, 175);   // 7
   digitalWrite(rfwplus, HIGH);  // 3
   digitalWrite(rfwminus, LOW);  // 2
-  analogWrite(rfwPWM, 180);   // 4
-  digitalWrite(rbwplus, LOW); // 9
-  digitalWrite(rbwminus, HIGH);   // 10
-  analogWrite(rbwPWM, 150);   // 8
-  digitalWrite(lbwplus, LOW); // 12
-  digitalWrite(lbwminus, HIGH); // 11
-  analogWrite(lbwPWM, 200);   // 13
+  analogWrite(rfwPWM, 212);   // 4
+  digitalWrite(rbwplus, HIGH); // 9
+  digitalWrite(rbwminus, LOW);   // 10
+  analogWrite(rbwPWM, 180);   // 8
+  digitalWrite(lbwplus, HIGH); // 12
+  digitalWrite(lbwminus, LOW); // 11
+  analogWrite(lbwPWM, 180);   // 13
   delay(seconds);
 }
 
 void driveBackwards(int seconds) {
   digitalWrite(lfwplus, LOW);  // 6
   digitalWrite(lfwminus, HIGH);  // 5
-  analogWrite(lfwPWM, 150);   // 7
+  analogWrite(lfwPWM, 175);   // 7
   digitalWrite(rfwplus, LOW);  // 3
   digitalWrite(rfwminus, HIGH);  // 2
-  analogWrite(rfwPWM, 180);   // 4
-  digitalWrite(rbwplus, HIGH); // 9
-  digitalWrite(rbwminus, LOW);   // 10
-  analogWrite(rbwPWM, 150);   // 8
-  digitalWrite(lbwplus, HIGH); // 12
-  digitalWrite(lbwminus, LOW); // 11
-  analogWrite(lbwPWM, 200);   // 13
-  delay(seconds);
-}
-
-void driveLeft(int seconds) {
-  digitalWrite(lfwplus, LOW);  // 6
-  digitalWrite(lfwminus, HIGH);  // 5
-  analogWrite(lfwPWM, 150);   // 7
-  digitalWrite(rfwplus, HIGH);  // 3
-  digitalWrite(rfwminus, LOW);  // 2
-  analogWrite(rfwPWM, 180);   // 4
-  digitalWrite(rbwplus, HIGH); // 9
-  digitalWrite(rbwminus, LOW);   // 10
-  analogWrite(rbwPWM, 150);   // 8
+  analogWrite(rfwPWM, 212);   // 4
+  digitalWrite(rbwplus, LOW); // 9
+  digitalWrite(rbwminus, HIGH);   // 10
+  analogWrite(rbwPWM, 180);   // 8
   digitalWrite(lbwplus, LOW); // 12
   digitalWrite(lbwminus, HIGH); // 11
-  analogWrite(lbwPWM, 200);   // 13
+  analogWrite(lbwPWM, 180);   // 13
   delay(seconds);
 }
 
 void driveRight(int seconds) {
   digitalWrite(lfwplus, HIGH);  // 6
   digitalWrite(lfwminus, LOW);  // 5
-  analogWrite(lfwPWM, 150);   // 7
+  analogWrite(lfwPWM, 175);   // 7
   digitalWrite(rfwplus, LOW);  // 3
   digitalWrite(rfwminus, HIGH);  // 2
-  analogWrite(rfwPWM, 180);   // 4
+  analogWrite(rfwPWM, 215);   // 4
+  digitalWrite(rbwplus, HIGH); // 9
+  digitalWrite(rbwminus, LOW);   // 10
+  analogWrite(rbwPWM, 180);   // 8
+  digitalWrite(lbwplus, LOW); // 12
+  digitalWrite(lbwminus, HIGH); // 11
+  analogWrite(lbwPWM, 180);   // 13
+  delay(seconds);
+}
+
+void driveLeft(int seconds) {
+  digitalWrite(lfwplus, LOW);  // 6
+  digitalWrite(lfwminus, HIGH);  // 5
+  analogWrite(lfwPWM, 175);   // 7
+  digitalWrite(rfwplus, HIGH);  // 3
+  digitalWrite(rfwminus, LOW);  // 2
+  analogWrite(rfwPWM, 212);   // 4
   digitalWrite(rbwplus, LOW); // 9
   digitalWrite(rbwminus, HIGH);   // 10
-  analogWrite(rbwPWM, 150);   // 8
+  analogWrite(rbwPWM, 180);   // 8
   digitalWrite(lbwplus, HIGH); // 12
   digitalWrite(lbwminus, LOW); // 11
-  analogWrite(lbwPWM, 200);   // 13
+  analogWrite(lbwPWM, 180);   // 13
   delay(seconds);
 }
 
@@ -152,6 +170,38 @@ void stopMotors(int seconds) {
   digitalWrite(lbwplus, LOW); // 12
   digitalWrite(lbwminus, HIGH); // 11
   analogWrite(lbwPWM, 0);   // 13
+  delay(seconds);
+}
+
+void GUN(int seconds) { 
+  digitalWrite(lfwplus, HIGH);  // 6
+  digitalWrite(lfwminus, LOW);  // 5
+  analogWrite(lfwPWM, 215);   // 7
+  digitalWrite(rfwplus, HIGH);  // 3
+  digitalWrite(rfwminus, LOW);  // 2
+  analogWrite(rfwPWM, 252);   // 4
+  digitalWrite(rbwplus, HIGH); // 9
+  digitalWrite(rbwminus, LOW);   // 10
+  analogWrite(rbwPWM, 220);   // 8
+  digitalWrite(lbwplus, HIGH); // 12
+  digitalWrite(lbwminus, LOW); // 11
+  analogWrite(lbwPWM, 220);   // 13
+  delay(seconds);
+}
+
+void adjust(int seconds) { 
+  digitalWrite(lfwplus, HIGH);  // 6
+  digitalWrite(lfwminus, LOW);  // 5
+  analogWrite(lfwPWM, 175);   // 7
+  digitalWrite(rfwplus, LOW);  // 3
+  digitalWrite(rfwminus, HIGH);  // 2
+  analogWrite(rfwPWM, 212);   // 4
+  digitalWrite(rbwplus, LOW); // 9
+  digitalWrite(rbwminus, HIGH);   // 10
+  analogWrite(rbwPWM, 180);   // 8
+  digitalWrite(lbwplus, HIGH); // 12
+  digitalWrite(lbwminus, LOW); // 11
+  analogWrite(lbwPWM, 180);   // 13
   delay(seconds);
 }
 
