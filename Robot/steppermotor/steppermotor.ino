@@ -1,14 +1,6 @@
 // Stepper motor
-#include <Robot.h>
-Robot motor(22,24,26,28);
-
-//skilgreinum encoder breytur fyrir hjól
-/*int encoderLFW = 2;
-float rpsLFW;
-float rpmLFW;
-volatile int pulsesLFW;
-unsigned long timeoldLFW;
-float sLFW;*/
+#include <StepperMotor.h>
+StepperMotor motor(22,24,26,28);
 
 //----------------
 
@@ -16,7 +8,7 @@ float sLFW;*/
 int lfwPWM = 8;
 int lfwplus = 10;
 int lfwminus = 9;
-//----------------x
+//----------------
 int rfwPWM = 13;
 int rfwplus = 11;
 int rfwminus = 12;
